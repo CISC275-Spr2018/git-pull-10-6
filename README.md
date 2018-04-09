@@ -5,7 +5,7 @@ Muhammet: this is my test commit
 
 Will: this is my branch
 
-Adam:
+Adam: test commit
 
 Ryan: 
 
