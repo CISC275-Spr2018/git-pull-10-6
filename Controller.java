@@ -8,7 +8,6 @@ public class Controller implements ActionListener {
 
 	private Model model;
 	private View view;
-
 	JButton moveButton = new JButton("stop");
 	boolean moving = true;
 
@@ -17,7 +16,6 @@ public class Controller implements ActionListener {
 		model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
 
 		moveButton.addActionListener(this);
-		moveButton.setPreferredSize(new Dimension(30, 30));
 	}
 
 	// run the simulation
@@ -39,8 +37,10 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (moving) {
 			moving = false;
+			view.stopFrame(1);
 		} else {
 			moving = true;
+			view.stopFrame(10);
 		}
 
 	}

@@ -22,9 +22,8 @@ public class View extends JPanel {
 	JFrame frame = new JFrame();
 	JButton moveButton;
 	boolean isMoving = true;
-
 	int picNum = 0;
-	int frameCount = 10;
+	static int frameCount = 10;
 
 	public enum Directions {
 		EAST("images/orc/orc_forward_east.png"), NORTHEAST("images/orc/orc_forward_northeast.png"), NORTH(
@@ -76,14 +75,19 @@ public class View extends JPanel {
 	public int getHeight() {
 		return frameHeight;
 	}
+	
+	public void stopFrame(int x) {
+		frameCount = x;
+	}
 
 	public void update(int x, int y, int dir, boolean move) {
+		
 		xloc = x;
 		yloc = y;
 		orient = dir;
+		
 		if (move) {
 			moveButton.setText("stop");
-			picNum = (picNum + 1) % frameCount;
 		} else {
 			moveButton.setText("start");
 		}
@@ -100,7 +104,6 @@ public class View extends JPanel {
 	public void paint(Graphics g) {
 
 		picNum = (picNum + 1) % frameCount;
-		System.out.println(isMoving + "in paint");
 		// g.drawImage(pics_se[picNum], xloc, yloc, Color.gray, this);
 
 		// faceSouthEast
