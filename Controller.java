@@ -1,10 +1,11 @@
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 
-public class Controller implements ActionListener {
+public class Controller implements ActionListener, KeyListener {
 
 	private Model model;
 	private View view;
@@ -14,8 +15,8 @@ public class Controller implements ActionListener {
 	public Controller() {
 		view = new View(moveButton);
 		model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
-
 		moveButton.addActionListener(this);
+		moveButton.addKeyListener(this);
 	}
 
 	// run the simulation
@@ -27,7 +28,6 @@ public class Controller implements ActionListener {
 				model.updateLocationAndDirection();
 				// update the view
 			}
-			System.out.println(moving);
 			view.update(model.getX(), model.getY(), model.getDirect(), moving);
 
 		}
@@ -43,5 +43,28 @@ public class Controller implements ActionListener {
 			view.stopFrame(10);
 		}
 
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		char c = e.getKeyChar();
+		if (c == 'f') {
+			System.out.println("FIRE!");
+		}
+		else {
+			System.out.println("NOPE");
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
