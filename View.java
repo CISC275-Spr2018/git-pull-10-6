@@ -25,6 +25,7 @@ public class View extends JPanel {
 	static int picNum = 0;
 	static int frameCount = 10;
 
+
 	public enum Directions {
 		EAST("images/orc/orc_forward_east.png"), NORTHEAST("images/orc/orc_forward_northeast.png"), NORTH(
 				"images/orc/orc_forward_north.png"), NORTHWEST("images/orc/orc_forward_northwest.png"), WEST(
@@ -187,7 +188,7 @@ public class View extends JPanel {
 
 	public View(JButton jb) {
 		moveButton = jb;
-		
+
 		BufferedImage faceEast = createImage(0);
 		BufferedImage faceNorthEast = createImage(45);
 		BufferedImage faceNorth = createImage(90);
