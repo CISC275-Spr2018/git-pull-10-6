@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 
-public class Controller implements ActionListener {
+public class Controller implements ActionListener, KeyListener {
 
 	private Model model;
 	private View view;
@@ -20,39 +20,7 @@ public class Controller implements ActionListener {
 		moveButton.addActionListener(this);
 
 		view.frame.setFocusable(true);
-		
-		view.frame.addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-		    
-			}
-
-			@Override
-		       public void keyPressed(KeyEvent e) {
-					int keyPress = e.getKeyCode();
-					if(keyPress == KeyEvent.VK_UP){
-						System.out.println("Facing North");
-						
-					}
-					else if(keyPress == KeyEvent.VK_DOWN){
-						System.out.println("Facing South");	
-				
-					}
-					else if(keyPress == KeyEvent.VK_LEFT){
-						System.out.println("Facing West");	
-				
-					}
-					else if(keyPress == KeyEvent.VK_RIGHT){
-						System.out.println("Facing East");	
-			
-					}
-			}
-			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				
-		    }
-		    });
+		view.frame.addKeyListener(this);
 	}
 
 	// run the simulation
@@ -80,5 +48,33 @@ public class Controller implements ActionListener {
 		}
 
 	}
+	
+	@Override
+	public void keyTyped(KeyEvent e) {
+    
+	}
+
+	@Override
+       public void keyPressed(KeyEvent e) {
+			int keyPress = e.getKeyCode();
+			if(keyPress == KeyEvent.VK_UP){
+				model.setUP();
+			}
+			else if(keyPress == KeyEvent.VK_DOWN){
+				model.setDOWN();
+			}
+			else if(keyPress == KeyEvent.VK_LEFT){
+				model.setLEFT();
+		
+			}
+			else if(keyPress == KeyEvent.VK_RIGHT){
+				model.setRIGHT();
+			}
+	}
+	
+	@Override
+	public void keyReleased(KeyEvent e) {
+
+    }
 
 }

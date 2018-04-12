@@ -24,6 +24,10 @@ public class View extends JPanel {
 	boolean isMoving = true;
 	int picNum = 0;
 	static int frameCount = 10;
+	boolean pressedUP = false;
+	boolean pressedDOWN = false;
+	boolean pressedLEFT = false;
+	boolean pressedRIGHT = false;
 
 	public enum Directions {
 		EAST("images/orc/orc_forward_east.png"), NORTHEAST("images/orc/orc_forward_northeast.png"), NORTH(
@@ -41,6 +45,8 @@ public class View extends JPanel {
 			return name;
 		}
 	}
+	
+	static BufferedImage[] activePics;
 
 	BufferedImage[] pics_e;
 	BufferedImage[] pics_ne;
@@ -79,12 +85,40 @@ public class View extends JPanel {
 	public void stopFrame(int x) {
 		frameCount = x;
 	}
+	
+	public void changePicArray(){
+		if (orient == 315)
+			activePics = pics_se;
+		// faceNorthEast
+		else if (orient == 45)
+			activePics = pics_ne;
+		// faceSouthWest
+		else if (orient == 225)
+			activePics = pics_sw;
+		// faceNorthWest
+		else if (orient == 135)
+			activePics = pics_nw;
+		// faceNorth
+		else if (orient == 90)
+			activePics = pics_n;
+		// faceSouth
+		else if (orient == 270)
+			activePics = pics_s;
+		// faceWest
+		else if (orient == 180)
+			activePics = pics_w;
+		// faceNorth
+		else if (orient == 0)
+			activePics = pics_e;
+	}
 
 	public void update(int x, int y, int dir, boolean move) {
+		System.out.println(dir);
 		
 		xloc = x;
 		yloc = y;
 		orient = dir;
+		changePicArray();
 		
 		if (move) {
 			moveButton.setText("stop");
@@ -104,20 +138,7 @@ public class View extends JPanel {
 	public void paint(Graphics g) {
 
 		picNum = (picNum + 1) % frameCount;
-		// g.drawImage(pics_se[picNum], xloc, yloc, Color.gray, this);
-
-		// faceSouthEast
-		if (orient == 315)
-			g.drawImage(pics_se[picNum], xloc, yloc, Color.gray, this);
-		// faceNorthEast
-		else if (orient == 45)
-			g.drawImage(pics_ne[picNum], xloc, yloc, Color.gray, this);
-		// faceSouthWest
-		else if (orient == 225)
-			g.drawImage(pics_sw[picNum], xloc, yloc, Color.gray, this);
-		// faceNorthWest
-		else if (orient == 135)
-			g.drawImage(pics_nw[picNum], xloc, yloc, Color.gray, this);
+		g.drawImage(activePics[picNum], xloc, yloc, Color.gray, this);
 	}
 
 	public void open() {
@@ -159,6 +180,8 @@ public class View extends JPanel {
 			pics_s[i] = faceSouth.getSubimage(imageWidth * i, 0, imageWidth, imageHeight);
 			pics_se[i] = faceSouthEast.getSubimage(imageWidth * i, 0, imageWidth, imageHeight);
 		}
+		
+		activePics = pics_se;
 	}
 
 	private BufferedImage createImage(int dir) {
