@@ -1,7 +1,5 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +15,7 @@ import javax.swing.JPanel;
  */
 
 @SuppressWarnings("serial")
-public class View extends JPanel{
+public class View extends JPanel {
 
 	JFrame frame = new JFrame();
 	JButton moveButton;
@@ -26,8 +24,7 @@ public class View extends JPanel{
 	boolean jumpLock = false;
 	static int picNum = 0;
 	static int frameCount = 10;
-	static int jumpFrameCount = 8;
-	int x = 0;
+
 
 	public enum Directions {
 		EAST("images/orc/orc_forward_east.png"), NORTHEAST("images/orc/orc_forward_northeast.png"), NORTH(
@@ -35,28 +32,34 @@ public class View extends JPanel{
 						"images/orc/orc_forward_west.png"), SOUTHWEST("images/orc/orc_forward_southwest.png"), SOUTH(
 								"images/orc/orc_forward_south.png"), SOUTHEAST("images/orc/orc_forward_southeast.png");
 		private String name = null;
+
 		private Directions(String s) {
 			name = s;
 		}
+
 		public String getName() {
 			return name;
 		}
 	}
-	
+
 	public enum Jump {
-		EAST("images/orc/orc_jump_east.png"), SOUTH("images/orc/orc_jump_south.png"), 
-		NORTH("images/orc/orc_jump_north.png"), WEST("images/orc/orc_jump_west.png");
+		EAST("images/orc/orc_jump_east.png"), NORTHEAST("images/orc/orc_jump_northeast.png"), NORTH(
+				"images/orc/orc_jump_north.png"), NORTHWEST("images/orc/orc_jump_northwest.png"), WEST(
+						"images/orc/orc_jump_west.png"), SOUTHWEST("images/orc/orc_jump_southwest.png"), SOUTH(
+								"images/orc/orc_jump_south.png"), SOUTHEAST("images/orc/orc_jump_southeast.png");
 		private String name = null;
+
 		private Jump(String s) {
 			name = s;
 		}
+
 		public String getName() {
 			return name;
 		}
 	}
 
 	static BufferedImage[] activePics;
-	
+
 	BufferedImage[] pics_e;
 	BufferedImage[] pics_ne;
 	BufferedImage[] pics_n;
@@ -65,11 +68,11 @@ public class View extends JPanel{
 	BufferedImage[] pics_sw;
 	BufferedImage[] pics_s;
 	BufferedImage[] pics_se;
-	
-	BufferedImage[] pics_jump_e;
-	BufferedImage[] pics_jump_s;
-	BufferedImage[] pics_jump_n;
-	BufferedImage[] pics_jump_w;
+
+	BufferedImage[] pics_jump_se;
+	BufferedImage[] pics_jump_sw;
+	BufferedImage[] pics_jump_ne;
+	BufferedImage[] pics_jump_nw;
 
 	final static int frameWidth = 1000;
 	final static int frameHeight = 600;
@@ -79,7 +82,7 @@ public class View extends JPanel{
 	static int xloc = 0;
 	static int yloc = 0;
 	static int orient = 315;
-	
+
 	int jumpNCode = -9996;
 	int jumpECode = -9997;
 	int jumpSCode = -9998;
@@ -100,28 +103,27 @@ public class View extends JPanel{
 	public int getHeight() {
 		return frameHeight;
 	}
-	
-	public void stopFrame(int x) {
+
+	public void changeFrame(int x) {
 		frameCount = x;
 	}
 
-	public void isJumping(boolean spacebar){
+	public void isJumping(boolean spacebar) {
 		pressedJump = spacebar;
-		if(!pressedJump){
+		if (!pressedJump) {
 			jumpLock = false;
 		}
-		if(pressedJump){
+		if (pressedJump) {
 			jumpLock = true;
 		}
 	}
-	
-	public boolean getJumpLock(){
+
+	public boolean getJumpLock() {
 		return jumpLock;
 	}
-	
-	
-	public void changePicArray(){
-		if(!getJumpLock()){
+
+	public void changePicArray() {
+		if (!getJumpLock()) {
 			// faceSouthEast
 			if (orient == 315)
 				activePics = pics_se;
@@ -134,28 +136,27 @@ public class View extends JPanel{
 			// faceNorthWest
 			else if (orient == 135)
 				activePics = pics_nw;
-		}
-		else{
+		} else {
 			if (orient == 315)
-				activePics = pics_jump_s;
+				activePics = pics_jump_se;
 			// faceNorthEast
 			else if (orient == 45)
-				activePics = pics_jump_e;
+				activePics = pics_jump_ne;
 			// faceSouthWest
 			else if (orient == 225)
-				activePics = pics_jump_w;
+				activePics = pics_jump_sw;
 			// faceNorthWest
 			else if (orient == 135)
-				activePics = pics_jump_n;
+				activePics = pics_jump_nw;
 		}
 	}
-	
+
 	public void update(int x, int y, int dir, boolean move) {
 		xloc = x;
 		yloc = y;
 		orient = dir;
 		changePicArray();
-		
+
 		if (move) {
 			moveButton.setText("stop");
 		} else {
@@ -187,6 +188,7 @@ public class View extends JPanel{
 
 	public View(JButton jb) {
 		moveButton = jb;
+
 		BufferedImage faceEast = createImage(0);
 		BufferedImage faceNorthEast = createImage(45);
 		BufferedImage faceNorth = createImage(90);
@@ -203,17 +205,16 @@ public class View extends JPanel{
 		pics_sw = new BufferedImage[10];
 		pics_s = new BufferedImage[10];
 		pics_se = new BufferedImage[10];
-		
-		BufferedImage jumpEast = createImage(jumpECode);
-		BufferedImage jumpWest = createImage(jumpWCode);
-		BufferedImage jumpNorth = createImage(jumpNCode);
-		BufferedImage jumpSouth = createImage(jumpSCode);
-		pics_jump_e = new BufferedImage[jumpFrameCount];
-		pics_jump_w = new BufferedImage[jumpFrameCount];
-		pics_jump_n = new BufferedImage[jumpFrameCount];
-		pics_jump_s = new BufferedImage[jumpFrameCount];
-		
-		
+
+		BufferedImage jumpSouthEast = createImage(jumpECode);
+		BufferedImage jumpNorthWest = createImage(jumpWCode);
+		BufferedImage jumpNorthEast = createImage(jumpNCode);
+		BufferedImage jumpSouthWest = createImage(jumpSCode);
+		pics_jump_se = new BufferedImage[8];
+		pics_jump_nw = new BufferedImage[8];
+		pics_jump_ne = new BufferedImage[8];
+		pics_jump_sw = new BufferedImage[8];
+
 		for (int i = 0; i < frameCount; i++) {
 			pics_e[i] = faceEast.getSubimage(imageWidth * i, 0, imageWidth, imageHeight);
 			pics_ne[i] = faceNorthEast.getSubimage(imageWidth * i, 0, imageWidth, imageHeight);
@@ -224,16 +225,16 @@ public class View extends JPanel{
 			pics_s[i] = faceSouth.getSubimage(imageWidth * i, 0, imageWidth, imageHeight);
 			pics_se[i] = faceSouthEast.getSubimage(imageWidth * i, 0, imageWidth, imageHeight);
 		}
-		
-		for (int j = 0; j < jumpFrameCount; j++){
-			pics_jump_e[j] = jumpEast.getSubimage(imageWidth*j, 0, imageWidth, imageHeight);
-			pics_jump_w[j] = jumpWest.getSubimage(imageWidth*j, 0, imageWidth, imageHeight);
-			pics_jump_n[j] = jumpNorth.getSubimage(imageWidth*j, 0, imageWidth, imageHeight);
-			pics_jump_s[j] = jumpSouth.getSubimage(imageWidth*j, 0, imageWidth, imageHeight);
+
+		for (int j = 0; j < 8; j++) {
+			pics_jump_se[j] = jumpSouthEast.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
+			pics_jump_nw[j] = jumpNorthWest.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
+			pics_jump_ne[j] = jumpNorthEast.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
+			pics_jump_sw[j] = jumpSouthWest.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
 		}
-		
-		activePics = pics_se; //initialize
-		
+
+		activePics = pics_se; // initialize
+
 	}
 
 	private BufferedImage createImage(int dir) {
@@ -245,12 +246,12 @@ public class View extends JPanel{
 		BufferedImage faceSouthWest;
 		BufferedImage faceSouth;
 		BufferedImage faceSouthEast;
-		
+
 		BufferedImage jumpEast;
 		BufferedImage jumpWest;
 		BufferedImage jumpNorth;
 		BufferedImage jumpSouth;
-		
+
 		try {
 			if (dir == 0) {
 				faceEast = ImageIO.read(new File(Directions.EAST.getName()));
@@ -277,13 +278,13 @@ public class View extends JPanel{
 				faceSouthEast = ImageIO.read(new File(Directions.SOUTHEAST.getName()));
 				return faceSouthEast;
 			} else if (dir == jumpECode) {
-				jumpEast = ImageIO.read(new File(Jump.EAST.getName()));
+				jumpEast = ImageIO.read(new File(Jump.SOUTHEAST.getName()));
 				return jumpEast;
 			} else if (dir == jumpWCode) {
-				jumpWest = ImageIO.read(new File(Jump.WEST.getName()));
+				jumpWest = ImageIO.read(new File(Jump.NORTHWEST.getName()));
 				return jumpWest;
 			} else if (dir == jumpNCode) {
-				jumpNorth = ImageIO.read(new File(Jump.NORTH.getName()));
+				jumpNorth = ImageIO.read(new File(Jump.NORTHEAST.getName()));
 				return jumpNorth;
 			} else if (dir == jumpSCode) {
 				jumpSouth = ImageIO.read(new File(Jump.SOUTH.getName()));
