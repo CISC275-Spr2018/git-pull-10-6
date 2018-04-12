@@ -11,6 +11,7 @@ public class Controller implements ActionListener, KeyListener {
 	private View view;
 	JButton moveButton = new JButton("stop");
 	boolean moving = true;
+	boolean pressedJump = false;
 
 	public Controller() {
 		view = new View(moveButton);
@@ -37,10 +38,10 @@ public class Controller implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		if (moving) {
 			moving = false;
-			view.stopFrame(1);
+			view.changeFrame(1);
 		} else {
 			moving = true;
-			view.stopFrame(10);
+			view.changeFrame(10);
 		}
 
 	}
@@ -48,23 +49,30 @@ public class Controller implements ActionListener, KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		char c = e.getKeyChar();
-		if (c == 'f') {
-			System.out.println("FIRE!");
-		}
-		else {
-			System.out.println("NOPE");
+		if (c == 'j') {
+			view.changeFrame(8);
+			pressedJump = !pressedJump;
+			view.isJumping(pressedJump);
+			view.changePicArray();
+			System.out.println("Jump!");
+		} else if (c == 'f') {
+			view.changeFrame(8);
+			pressedJump = !pressedJump;
+			view.isJumping(pressedJump);
+			view.changePicArray();
+			System.out.println("Fire!");
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
