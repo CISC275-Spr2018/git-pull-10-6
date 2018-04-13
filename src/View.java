@@ -25,15 +25,14 @@ public class View extends JPanel {
 	static int picNum = 0;
 	static int frameCount = 10;
 
-
-	public enum Directions {
+	public enum Direction {
 		EAST("images/orc/orc_forward_east.png"), NORTHEAST("images/orc/orc_forward_northeast.png"), NORTH(
 				"images/orc/orc_forward_north.png"), NORTHWEST("images/orc/orc_forward_northwest.png"), WEST(
 						"images/orc/orc_forward_west.png"), SOUTHWEST("images/orc/orc_forward_southwest.png"), SOUTH(
 								"images/orc/orc_forward_south.png"), SOUTHEAST("images/orc/orc_forward_southeast.png");
 		private String name = null;
 
-		private Directions(String s) {
+		private Direction(String s) {
 			name = s;
 		}
 
@@ -58,6 +57,7 @@ public class View extends JPanel {
 		}
 	}
 
+	BufferedImage pics2D[][];
 	static BufferedImage[] activePics;
 
 	BufferedImage[] pics_e;
@@ -189,14 +189,14 @@ public class View extends JPanel {
 	public View(JButton jb) {
 		moveButton = jb;
 
-		BufferedImage faceEast = createImage(0);
-		BufferedImage faceNorthEast = createImage(45);
-		BufferedImage faceNorth = createImage(90);
-		BufferedImage faceNorthWest = createImage(135);
-		BufferedImage faceWest = createImage(180);
-		BufferedImage faceSouthWest = createImage(225);
-		BufferedImage faceSouth = createImage(270);
-		BufferedImage faceSouthEast = createImage(315);
+		BufferedImage faceEast = createImage(Direction.EAST);
+		BufferedImage faceNorthEast = createImage(Direction.NORTHEAST);
+		BufferedImage faceNorth = createImage(Direction.NORTH);
+		BufferedImage faceNorthWest = createImage(Direction.NORTHWEST);
+		BufferedImage faceWest = createImage(Direction.WEST);
+		BufferedImage faceSouthWest = createImage(Direction.SOUTHWEST);
+		BufferedImage faceSouth = createImage(Direction.SOUTH);
+		BufferedImage faceSouthEast = createImage(Direction.SOUTHEAST);
 		pics_e = new BufferedImage[10];
 		pics_ne = new BufferedImage[10];
 		pics_n = new BufferedImage[10];
@@ -206,14 +206,14 @@ public class View extends JPanel {
 		pics_s = new BufferedImage[10];
 		pics_se = new BufferedImage[10];
 
-		BufferedImage jumpSouthEast = createImage(jumpECode);
-		BufferedImage jumpNorthWest = createImage(jumpWCode);
-		BufferedImage jumpNorthEast = createImage(jumpNCode);
-		BufferedImage jumpSouthWest = createImage(jumpSCode);
-		pics_jump_se = new BufferedImage[8];
-		pics_jump_nw = new BufferedImage[8];
-		pics_jump_ne = new BufferedImage[8];
-		pics_jump_sw = new BufferedImage[8];
+		//BufferedImage jumpSouthEast = createImage(Jump.EAST);
+		//BufferedImage jumpNorthWest = createImage(jumpWCode);
+		//BufferedImage jumpNorthEast = createImage(jumpNCode);
+		//BufferedImage jumpSouthWest = createImage(jumpSCode);
+		//pics_jump_se = new BufferedImage[8];
+		//pics_jump_nw = new BufferedImage[8];
+		//pics_jump_ne = new BufferedImage[8];
+		//pics_jump_sw = new BufferedImage[8];
 
 		for (int i = 0; i < frameCount; i++) {
 			pics_e[i] = faceEast.getSubimage(imageWidth * i, 0, imageWidth, imageHeight);
@@ -226,73 +226,26 @@ public class View extends JPanel {
 			pics_se[i] = faceSouthEast.getSubimage(imageWidth * i, 0, imageWidth, imageHeight);
 		}
 
-		for (int j = 0; j < 8; j++) {
-			pics_jump_se[j] = jumpSouthEast.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
-			pics_jump_nw[j] = jumpNorthWest.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
-			pics_jump_ne[j] = jumpNorthEast.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
-			pics_jump_sw[j] = jumpSouthWest.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
-		}
+		//for (int j = 0; j < 8; j++) {
+		//	pics_jump_se[j] = jumpSouthEast.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
+		//	pics_jump_nw[j] = jumpNorthWest.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
+		//	pics_jump_ne[j] = jumpNorthEast.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
+		//	pics_jump_sw[j] = jumpSouthWest.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
+		//}
 
-		activePics = pics_se; // initialize
+		//activePics = pics_se; // initialize
 
 	}
 
-	private BufferedImage createImage(int dir) {
-		BufferedImage faceEast;
-		BufferedImage faceNorthEast;
-		BufferedImage faceNorth;
-		BufferedImage faceNorthWest;
-		BufferedImage faceWest;
-		BufferedImage faceSouthWest;
-		BufferedImage faceSouth;
-		BufferedImage faceSouthEast;
+	private BufferedImage createImage(Direction d) {
 
-		BufferedImage jumpEast;
-		BufferedImage jumpWest;
-		BufferedImage jumpNorth;
-		BufferedImage jumpSouth;
-
-		try {
-			if (dir == 0) {
-				faceEast = ImageIO.read(new File(Directions.EAST.getName()));
-				return faceEast;
-			} else if (dir == 45) {
-				faceNorthEast = ImageIO.read(new File(Directions.NORTHEAST.getName()));
-				return faceNorthEast;
-			} else if (dir == 90) {
-				faceNorth = ImageIO.read(new File(Directions.NORTH.getName()));
-				return faceNorth;
-			} else if (dir == 135) {
-				faceNorthWest = ImageIO.read(new File(Directions.NORTHWEST.getName()));
-				return faceNorthWest;
-			} else if (dir == 180) {
-				faceWest = ImageIO.read(new File(Directions.WEST.getName()));
-				return faceWest;
-			} else if (dir == 225) {
-				faceSouthWest = ImageIO.read(new File(Directions.SOUTHWEST.getName()));
-				return faceSouthWest;
-			} else if (dir == 270) {
-				faceSouth = ImageIO.read(new File(Directions.SOUTH.getName()));
-				return faceSouth;
-			} else if (dir == 315) {
-				faceSouthEast = ImageIO.read(new File(Directions.SOUTHEAST.getName()));
-				return faceSouthEast;
-			} else if (dir == jumpECode) {
-				jumpEast = ImageIO.read(new File(Jump.SOUTHEAST.getName()));
-				return jumpEast;
-			} else if (dir == jumpWCode) {
-				jumpWest = ImageIO.read(new File(Jump.NORTHWEST.getName()));
-				return jumpWest;
-			} else if (dir == jumpNCode) {
-				jumpNorth = ImageIO.read(new File(Jump.NORTHEAST.getName()));
-				return jumpNorth;
-			} else if (dir == jumpSCode) {
-				jumpSouth = ImageIO.read(new File(Jump.SOUTH.getName()));
-				return jumpSouth;
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	try { 
+		return ImageIO.read(new File(d.getName()));
+	}
+	catch(IOException e) {
+		e.printStackTrace();
 		return null;
+		}
 	}
+
 }
