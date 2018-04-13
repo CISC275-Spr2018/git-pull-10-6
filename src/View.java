@@ -188,6 +188,10 @@ public class View extends JPanel {
 
 	public View(JButton jb) {
 		moveButton = jb;
+		
+		for (Direction d : Direction.values()) {
+			createImage(d);
+		}
 
 		BufferedImage faceEast = createImage(Direction.EAST);
 		BufferedImage faceNorthEast = createImage(Direction.NORTHEAST);
@@ -239,12 +243,11 @@ public class View extends JPanel {
 
 	private BufferedImage createImage(Direction d) {
 
-	try { 
-		return ImageIO.read(new File(d.getName()));
-	}
-	catch(IOException e) {
-		e.printStackTrace();
-		return null;
+		try {
+			return ImageIO.read(new File(d.getName()));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 
