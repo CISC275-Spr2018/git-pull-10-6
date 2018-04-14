@@ -59,6 +59,7 @@ public class Controller implements ActionListener, KeyListener {
 			int keyPress = e.getKeyCode();
 			if(keyPress == KeyEvent.VK_UP){
 				model.setUP();
+				
 			}
 			else if(keyPress == KeyEvent.VK_DOWN){
 				model.setDOWN();

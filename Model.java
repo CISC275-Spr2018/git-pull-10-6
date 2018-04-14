@@ -12,6 +12,9 @@ public class Model {
 	static int yloc = 0;
 	static int xIncr = 8;
 	static int yIncr = 2;
+	
+	static int tempXIncr = 8;
+	static int tempYIncr = 2;
 
 	static int paneWidth = 500;
 	static int paneHeight = 300;
@@ -78,23 +81,44 @@ public class Model {
 	}
 	
 	public void hitKeys(){
-		if(pressedUP && yIncr > 0){	
-			yIncr = -yIncr;
+		if(pressedUP && yIncr >= 0){	
+			if(tempYIncr > 0){
+				tempYIncr = -tempYIncr;
+			}
+			// yIncr = -yIncr;
+			yIncr = tempYIncr;
+			xIncr = 0;
 			pressedUP = false;
-		
 		}
-		if(pressedDOWN && yIncr < 0){
-			yIncr = - yIncr;
+		if(pressedDOWN && yIncr <= 0){
+			// yIncr = -yIncr;
+			if(tempYIncr < 0){
+				tempYIncr = -tempYIncr;
+			}
+			yIncr = tempYIncr;
+			xIncr = 0;
 			pressedDOWN = false;
 			
 		}
-		if(pressedLEFT && xIncr > 0){		
-			xIncr = - xIncr;
+		if(pressedLEFT && xIncr >= 0){		
+			// xIncr = -xIncr;
+			if(tempXIncr >  0){
+				tempXIncr = -tempXIncr;
+			}
+			xIncr = tempXIncr;
+			yIncr = 0;
 			pressedLEFT = false;
+			
 		}
-		if(pressedRIGHT && xIncr < 0){
-			xIncr = -xIncr;
+		if(pressedRIGHT && xIncr <= 0){
+			// xIncr = -xIncr;
+			if(tempXIncr < 0){
+				tempXIncr = -tempXIncr;
+			}
+			xIncr = tempXIncr;
+			yIncr = 0;
 			pressedRIGHT = false;
+			
 		}
 	}
 
