@@ -18,6 +18,7 @@ public class Controller implements ActionListener, KeyListener {
 	private View view;
 	JButton moveButton = new JButton("stop");
 	boolean moving = true;
+	boolean pressedJump = false;
 	
 	final int drawDelay = 30; // ms	
 	
@@ -84,13 +85,13 @@ public class Controller implements ActionListener, KeyListener {
 			model.setRIGHT();
 		}
 		else if (c == 'j') {
-			view.changeFrame(8);
+			view.stopFrame(8);
 			pressedJump = !pressedJump;
 			view.isJumping(pressedJump);
 			view.changePicArray();
 			System.out.println("Jump!");
 		} else if (c == 'f') {
-			view.changeFrame(8);
+			view.stopFrame(8);
 			pressedJump = !pressedJump;
 			view.isJumping(pressedJump);
 			view.changePicArray();
