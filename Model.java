@@ -40,6 +40,14 @@ public class Model {
 		spriteWidth = imageWidth;
 		spriteHeight = imageHeight;
 	}
+	
+	public int getPaneWidth(){
+		return paneWidth;
+	}
+	
+	public int getPaneHeight(){
+		return paneHeight;
+	}
 
 	public int getX() {
 		return xloc;

@@ -1,8 +1,13 @@
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.Action;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+import javax.swing.AbstractAction;
 
 import javax.swing.JButton;
 
@@ -12,31 +17,35 @@ public class Controller implements ActionListener, KeyListener {
 	private View view;
 	JButton moveButton = new JButton("stop");
 	boolean moving = true;
+	
+	final int drawDelay = 30; // ms	
+	
+	Action drawAction;
 
 	public Controller() {
 		view = new View(moveButton);
 		model = new Model(view.getWidth(), view.getHeight(), view.getImageWidth(), view.getImageHeight());
+		drawAction = new AbstractAction(){
+			
+			public void actionPerformed(ActionEvent e){
+				view.repaint();
+				if (moving) {
+					// increment the x and y coordinates, alter direction
+					model.updateLocationAndDirection();
+					// update the view
+				}
+				view.update(model.getX(), model.getY(), model.getDirect(), moving);
+				}
+			};  
 
 		moveButton.addActionListener(this);
 
 		view.frame.setFocusable(true);
 		view.frame.addKeyListener(this);
+		
+		
 	}
-
-	// run the simulation
-	public void start() {
-		view.open();
-		for (int i = 0; i < 5000; i++) {
-			if (moving) {
-				// increment the x and y coordinates, alter direction
-				model.updateLocationAndDirection();
-				// update the view
-			}
-			view.update(model.getX(), model.getY(), model.getDirect(), moving);
-
-		}
-	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (moving) {

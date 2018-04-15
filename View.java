@@ -140,20 +140,16 @@ public class View extends JPanel {
 		picNum = (picNum + 1) % frameCount;
 		g.drawImage(activePics[picNum], xloc, yloc, Color.gray, this);
 	}
-
-	public void open() {
-		frame.getContentPane().add(new View(moveButton));
+	public View(JButton jb) {
+		moveButton = jb;
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.add(moveButton);
+		frame.add(this);
 		frame.add(buttonPanel);
 		frame.setBackground(Color.gray);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(frameWidth, frameHeight);
 		frame.setVisible(true);
-	}
-
-	public View(JButton jb) {
-		moveButton = jb;
 		BufferedImage faceEast = createImage(0);
 		BufferedImage faceNorthEast = createImage(45);
 		BufferedImage faceNorth = createImage(90);
