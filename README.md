@@ -10,4 +10,4 @@ Adam: Updated View to incorporate jumping, and switching between Jumping and Wal
 Ryan: updated view to fix the problem where starting/stopping the game would take focus away from the keyboard, stopping
 any keyboard input from doing anything
 
-Al:test
+Al: Collaborated to implement moving with keyboard controls and button listener logic.
