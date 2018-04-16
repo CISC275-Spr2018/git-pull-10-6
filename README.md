@@ -5,7 +5,7 @@ Muhammet: Incorporated timer to animate instead of the for loop that was being u
 
 Will: this is my branch
 
-Adam: test commit
+Adam: Updated View to incorporate jumping, and switching between Jumping and Walking with the signal from the controller.
 
 Ryan: 
 
