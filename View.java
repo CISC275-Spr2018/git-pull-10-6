@@ -197,6 +197,7 @@ public class View extends JPanel {
 		} else {
 			moveButton.setText("start");
 		}
+		moveButton.setFocusable(false);
 
 		frame.repaint();
 
