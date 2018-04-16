@@ -57,8 +57,8 @@ public class View extends JPanel {
 		}
 	}
 
-	BufferedImage pics2D[][];
-	static BufferedImage[] activePics;
+	BufferedImage[][] pics2D = new BufferedImage[][] {};
+	//static BufferedImage[] activePics;
 
 	BufferedImage[] pics_e;
 	BufferedImage[] pics_ne;
@@ -122,7 +122,7 @@ public class View extends JPanel {
 		return jumpLock;
 	}
 
-	public void changePicArray() {
+	/*public void changePicArray() {
 		if (!getJumpLock()) {
 			// faceSouthEast
 			if (orient == 315)
@@ -149,13 +149,13 @@ public class View extends JPanel {
 			else if (orient == 135)
 				activePics = pics_jump_nw;
 		}
-	}
+	}*/
 
 	public void update(int x, int y, int dir, boolean move) {
 		xloc = x;
 		yloc = y;
 		orient = dir;
-		changePicArray();
+		//changePicArray();
 
 		if (move) {
 			moveButton.setText("stop");
@@ -186,14 +186,26 @@ public class View extends JPanel {
 		frame.setVisible(true);
 	}
 
+	//  EAST, WEST, NORTH
+	//  FRA1  FRA1  FRA1
+	//  FRA2  
 	public View(JButton jb) {
+		
 		moveButton = jb;
 		
-		for (Direction d : Direction.values()) {
-			createImage(d);
+		for(Direction d : Direction.values()){
+			
+			BufferedImage img = createImage(d);
+			int frames = img.getWidth() / imageWidth;
+			
+			for(int i = 0; i < frames; i++)
+			{ 
+				pics2D[d.ordinal()][i] = img.getSubimage(imageWidth*i, 0, imageWidth, imageHeight);
+			}
+		
 		}
 
-		BufferedImage faceEast = createImage(Direction.EAST);
+		/*BufferedImage faceEast = createImage(Direction.EAST);
 		BufferedImage faceNorthEast = createImage(Direction.NORTHEAST);
 		BufferedImage faceNorth = createImage(Direction.NORTH);
 		BufferedImage faceNorthWest = createImage(Direction.NORTHWEST);
@@ -228,7 +240,7 @@ public class View extends JPanel {
 			pics_sw[i] = faceSouthWest.getSubimage(imageWidth * i, 0, imageWidth, imageHeight);
 			pics_s[i] = faceSouth.getSubimage(imageWidth * i, 0, imageWidth, imageHeight);
 			pics_se[i] = faceSouthEast.getSubimage(imageWidth * i, 0, imageWidth, imageHeight);
-		}
+		}*/
 
 		//for (int j = 0; j < 8; j++) {
 		//	pics_jump_se[j] = jumpSouthEast.getSubimage(imageWidth * j, 0, imageWidth, imageHeight);
