@@ -66,8 +66,8 @@ public class View extends JPanel {
 	BufferedImage[] pics_s = new BufferedImage[10];
 	BufferedImage[] pics_se = new BufferedImage[10];
 
-	BufferedImage[][] pics2D = new BufferedImage[][] { pics_e, pics_ne, pics_n, pics_nw, pics_w, pics_sw, pics_s, pics_se };
-	// static BufferedImage[] activePics;
+	BufferedImage[][] pics2D = new BufferedImage[][] { pics_e, pics_ne, pics_n, pics_nw, pics_w, pics_sw, pics_s,
+			pics_se };
 
 	BufferedImage[] pics_jump_se;
 	BufferedImage[] pics_jump_sw;
@@ -122,22 +122,10 @@ public class View extends JPanel {
 		return jumpLock;
 	}
 
-	/*
-	 * public void changePicArray() { if (!getJumpLock()) { // faceSouthEast if
-	 * (orient == 315) activePics = pics_se; // faceNorthEast else if (orient == 45)
-	 * activePics = pics_ne; // faceSouthWest else if (orient == 225) activePics =
-	 * pics_sw; // faceNorthWest else if (orient == 135) activePics = pics_nw; }
-	 * else { if (orient == 315) activePics = pics_jump_se; // faceNorthEast else if
-	 * (orient == 45) activePics = pics_jump_ne; // faceSouthWest else if (orient ==
-	 * 225) activePics = pics_jump_sw; // faceNorthWest else if (orient == 135)
-	 * activePics = pics_jump_nw; } }
-	 */
-
 	public void update(int x, int y, int dir, boolean move) {
 		xloc = x;
 		yloc = y;
 		orient = dir;
-		// changePicArray();
 
 		if (move) {
 			moveButton.setText("stop");
@@ -145,11 +133,13 @@ public class View extends JPanel {
 			moveButton.setText("start");
 		}
 		frame.repaint();
+
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	public void paint(Graphics g) {
@@ -173,14 +163,12 @@ public class View extends JPanel {
 		moveButton = jb;
 
 		for (Direction d : Direction.values()) {
-
 			BufferedImage img = createImage(d);
 			int frames = img.getWidth() / imageWidth;
 
 			for (int i = 0; i < frames; i++) {
 				pics2D[d.ordinal()][i] = img.getSubimage(imageWidth * i, 0, imageWidth, imageHeight);
 			}
-
 		}
 	}
 
