@@ -59,13 +59,13 @@ public class Controller implements ActionListener, KeyListener {
 			view.changeFrame(8);
 			pressedJump = !pressedJump;
 			view.isJumping(pressedJump);
-			view.changePicArray();
+			//view.changePicArray();
 			System.out.println("Jump!");
 		} else if (c == 'f') {
 			view.changeFrame(8);
 			pressedJump = !pressedJump;
 			view.isJumping(pressedJump);
-			view.changePicArray();
+			//view.changePicArray();
 			System.out.println("Fire!");
 		}
 	}
