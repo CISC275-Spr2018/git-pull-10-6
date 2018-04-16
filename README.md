@@ -7,6 +7,7 @@ Will: Implemented jumping + fire logic upon keyboard input and the changing of s
 
 Adam: Updated View to incorporate jumping, and switching between Jumping and Walking with the signal from the controller.
 
-Ryan: 
+Ryan: updated view to fix the problem where starting/stopping the game would take focus away from the keyboard, stopping
+any keyboard input from doing anything
 
 Al:test
