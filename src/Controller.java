@@ -11,7 +11,6 @@ public class Controller implements ActionListener, KeyListener {
 	private View view;
 	JButton moveButton = new JButton("stop");
 	boolean moving = true;
-	boolean pressedJump = false;
 
 	public Controller() {
 		view = new View(moveButton);
@@ -29,8 +28,7 @@ public class Controller implements ActionListener, KeyListener {
 				model.updateLocationAndDirection();
 				// update the view
 			}
-			view.update(model.getX(), model.getY(), model.getDirect(), moving);
-
+			view.update(model.getX(), model.getY(), moving);
 		}
 	}
 
@@ -57,15 +55,11 @@ public class Controller implements ActionListener, KeyListener {
 		char c = e.getKeyChar();
 		if (c == 'j') {
 			view.changeFrame(8);
-			pressedJump = !pressedJump;
-			view.isJumping(pressedJump);
-			//view.changePicArray();
+			view.jump();
 			System.out.println("Jump!");
 		} else if (c == 'f') {
 			view.changeFrame(8);
-			pressedJump = !pressedJump;
-			view.isJumping(pressedJump);
-			//view.changePicArray();
+			view.fire();
 			System.out.println("Fire!");
 		}
 	}

@@ -62,9 +62,4 @@ public class Model {
 		xloc += xIncr;
 		yloc += yIncr;
 	}
-
-	public int getDirect() {
-		return (faceSouth && faceEast) ? 315
-				: (!faceSouth && faceEast) ? 45 : (faceSouth && !faceEast) ? 225 : (!faceSouth && !faceEast) ? 135 : 0;
-	}
 }
